@@ -1,0 +1,20 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\work\Keil\STM32\F407ZG\RTOS\Project\FreeRTOS\STM32F407-RTOS-CANM\MDK-ARM\Project.uvproj
+Project File Date:  09/17/2013
+
+<h2>Output:</h2>
+Build target 'STM324xG_EVAL'
+compiling can_func.c...
+..\src\can_func.c(313): warning:  #177-D: variable "rec_index" was declared but never referenced
+..\src\can_func.c(314): warning:  #177-D: variable "carifo_index" was declared but never referenced
+..\src\can_func.c(314): warning:  #177-D: variable "carifo_subindex" was declared but never referenced
+..\src\can_func.c(315): warning:  #177-D: variable "dev_num" was declared but never referenced
+..\src\can_func.c(317): warning:  #177-D: variable "prec" was declared but never referenced
+linking...
+Program Size: Code=13780 RO-data=6048 RW-data=272 ZI-data=20840  
+FromELF: creating hex file...
+".\STM324xG_EVAL\STM324xG_EVAL.axf" - 0 Error(s), 5 Warning(s).
