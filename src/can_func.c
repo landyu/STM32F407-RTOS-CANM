@@ -380,4 +380,15 @@ void doCommand(void * pvParameters)
 
 
 
+void setLeds(void * pvParameters)
+{
+	
+
+	for(;;)
+	{
+		
+	}
+
+}
+
 
