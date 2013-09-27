@@ -15,6 +15,24 @@
 #define RMALenMask 0x1f 
 
 /* Exported types ------------------------------------------------------------*/
+typedef struct 
+{
+	char			flag;			//'$'分隔符
+	char			flag2;			//'$'分隔符
+	char			flag3;			//'$'分隔符
+	char			flag4;			//'$'分隔符
+	char			type;			//数据包类型
+	char			id;				//车位或LED ID		
+	unsigned short	region_id;		//中继器ID
+	unsigned short	param1;			//0没车,1有车,2LED 当type=PARK_PACKET_TYPE_LED_SET时param1为空车位
+	unsigned short	param2;			//总数
+	unsigned short  param3;			//车位信息所属的区域(跟中继器ID不一样)
+	unsigned short	check;			//
+	char			end;			//'@'分隔符
+	char			end2;			//'@'分隔符
+	char			end3;			//'@'分隔符
+	char			end4;			//'@'分隔符
+}park_header;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported Variable ------------------------------------------------------------*/

@@ -206,6 +206,7 @@ void ToggleLed4(void * pvParameters)
   {
     /* toggle LED4 each 250ms */
     STM_EVAL_LEDToggle(LED4);
+	//USART_SendData(USART1, 'T');
     vTaskDelay(250);
   }
 }

@@ -310,16 +310,80 @@ u8   recStatus = REC_IDLE;
 
 void doCommand(void * pvParameters)
 {
-	u8 rec_buf, rec_index;
+	u8 rec_buf, rec_index, recStartFlagIndex, recEndFlagIndex, recDataStart, checkIndex;
 	u8 carifo_index, carifo_subindex;
 	u32 dev_num;
-	park_header spark_header;
+	//park_header spark_header;
+	unsigned char recBuf[64];
+	unsigned short check;
+	park_header  spark_header;
 	u8 *prec = (u8 *)&spark_header;
+	recStartFlagIndex = 0;
+	recEndFlagIndex = 0;
+	recDataStart = 0;
+
 	for(;;)
 	{
 		xQueueReceive(xRxCMDQue, &rec_buf,  portMAX_DELAY);
 
-			USART_SendData(USART1, rec_buf);
+			if(rec_buf == '$' && recDataStart == 0)
+			{
+				
+				recStartFlagIndex++;
+				if(recStartFlagIndex == 4)
+				{
+					recStartFlagIndex = 0;
+					recDataStart = 1;
+					rec_index = 0;
+					memset(recBuf, 0x0, 64);
+				}
+				//printf("$\r\n");
+				continue;	
+			}
+			
+				
+			if(recDataStart == 1)
+			{
+				
+				recBuf[rec_index++] =  rec_buf;
+				//if(rec_buf != '@')
+				//printf("buf[%d] = 0x%x \r\n",rec_index++, rec_buf);
+			}
+
+			if(rec_buf == '@')
+			{
+				 recEndFlagIndex++;
+				 if(recEndFlagIndex == 4)
+				{
+					recEndFlagIndex = 0;
+					recDataStart = 0;
+					check = 0;
+					for(checkIndex = 0; checkIndex < (rec_index - 6); checkIndex++)
+					{
+						//printf("buf[%d] = 0x%x \r\n",checkIndex, recBuf[checkIndex]);
+						check ^=  recBuf[checkIndex];
+					}
+					if(check == recBuf[checkIndex])
+					{
+						memcpy(&(spark_header.type), recBuf, checkIndex+1);
+						printf("rec ok \r\n");
+						printf("spark_header.type = 0x%x\r\n", spark_header.type);
+						printf("spark_header.id = 0x%x\r\n", spark_header.id);
+						printf("spark_header.region_id = 0x%x\r\n", spark_header.region_id);
+						printf("spark_header.param1 = 0x%x\r\n", spark_header.param1);
+						printf("spark_header.param2 = 0x%x\r\n", spark_header.param2);
+						printf("spark_header.param3 = 0x%x\r\n", spark_header.param3);
+						printf("spark_header.check = 0x%x\r\n", spark_header.check);
+						//printf("spark_header.type = 0x%x", spark_header.type);
+					}
+					else 
+						printf("rec error \r\n");
+
+				}
+					//printf("@\r\n");
+			}
+				
+			//USART_SendData(USART1, rec_buf);
 
 //		 	if(rec_buf = '$')
 //			{

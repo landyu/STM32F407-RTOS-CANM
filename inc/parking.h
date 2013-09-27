@@ -19,17 +19,17 @@ extern "C" {
 #define PARK_PACKET_TYPE_AUTO_UPLOAD_B		11  //车位信息变化时的主动上报包的回应
 #define PARK_PACKET_TYPE_LED_SET			20  //LED设置包
 
-typedef struct 
-{
-	char			flag;			//'$'分隔符
-	char			type;			//数据包类型
-	char			id;				//车位或LED ID		
-	char			region_id;		//中继器ID
-	unsigned short	param1;			//0没车,1有车,2LED 当type=PARK_PACKET_TYPE_LED_SET时param1为空车位
-	unsigned short	param2;			//总数
-	unsigned short  param3;			//车位信息所属的区域(跟中继器ID不一样)
-	unsigned char    check;
-}park_header;
+//typedef struct 
+//{
+//	char			flag;			//'$'分隔符
+//	char			type;			//数据包类型
+//	char			id;				//车位或LED ID		
+//	char			region_id;		//中继器ID
+//	unsigned short	param1;			//0没车,1有车,2LED 当type=PARK_PACKET_TYPE_LED_SET时param1为空车位
+//	unsigned short	param2;			//总数
+//	unsigned short  param3;			//车位信息所属的区域(跟中继器ID不一样)
+//	unsigned short    check;
+//}park_header;
 /* Exported constants --------------------------------------------------------*/
 extern unsigned char CarInf[64];
 extern volatile unsigned char DevExisting ;
